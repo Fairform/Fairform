@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom global styles */
 body {
-  @apply bg-black text-white font-sans;
+  @apply bg-white text-black font-sans;
 }
