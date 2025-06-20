@@ -18,7 +18,14 @@ export default function Home() {
       <main className="bg-black text-white min-h-screen font-sans">
         {/* NAVIGATION */}
         <header className="flex justify-between items-center px-6 md:px-20 py-6">
-          <div className="text-2xl font-bold">FAIRFORM</div>
+          <div className="flex items-center space-x-3">
+            <img
+              src="/fairform-logo.png"
+              alt="Fairform Logo"
+              className="h-8 w-auto dark:brightness-200 brightness-100"
+            />
+            <span className="text-2xl font-bold">FAIRFORM</span>
+          </div>
           <nav className="hidden md:flex space-x-8 text-sm font-medium">
             <a href="#">Product</a>
             <a href="#">Industries</a>
