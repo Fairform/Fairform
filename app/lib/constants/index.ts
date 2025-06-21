@@ -1,9 +1,9 @@
 // app/lib/constants/index.ts
-// Auto-generated content - update via scraper
-// Last updated: 2024-05-21
+// Auto-generated content – updated manually
+// Last updated: 2025-06-22
 
 /* ========== INDUSTRY REGULATIONS ========== */
-export const INDUSTRY_REGULATIONS = {
+export const INDUSTRY_REGULATIONS: Record<string, string[]> = {
   construction: [
     "Work Health and Safety Act 2011 (Cth)",
     "Building Code 2016 (National)",
@@ -179,8 +179,8 @@ export const TESTIMONIALS = [
 
 /* ========== FOOTER LINKS ========== */
 export const FOOTER_LINKS = [
-  { 
-    title: "Product", 
+  {
+    title: "Product",
     links: [
       { name: "Features", href: "/#features" },
       { name: "Solutions", href: "/#solutions" },
@@ -188,8 +188,8 @@ export const FOOTER_LINKS = [
       { name: "Pricing", href: "/pricing" }
     ]
   },
-  { 
-    title: "Company", 
+  {
+    title: "Company",
     links: [
       { name: "About", href: "/about" },
       { name: "Careers", href: "/careers" },
@@ -197,8 +197,8 @@ export const FOOTER_LINKS = [
       { name: "Blog", href: "/blog" }
     ]
   },
-  { 
-    title: "Legal", 
+  {
+    title: "Legal",
     links: [
       { name: "Privacy Policy", href: "/privacy" },
       { name: "Terms of Service", href: "/terms" },
@@ -216,10 +216,12 @@ export const INDUSTRIES = [
   { value: "trades", label: "Trades", icon: "🔧" }
 ];
 
-/* ========== COMPLIANCE DISCLAIMER ========== */
-export const COMPLIANCE_DISCLAIMER = `Fairform provides AI-generated compliance documentation. Our platform is not a law firm and does not provide legal advice. 
-Generated policies should be reviewed by a qualified legal professional familiar with Australian regulations in your jurisdiction 
-and industry. Fairform assumes no liability for compliance outcomes.`;
+/* ========== DISCLAIMER ========== */
+export const COMPLIANCE_DISCLAIMER = `
+Fairform provides AI-generated compliance documentation. Our platform is not a law firm and does not provide legal advice.
+Generated policies should be reviewed by a qualified legal professional familiar with Australian regulations in your jurisdiction and industry.
+Fairform assumes no liability for compliance outcomes.
+`;
 
 /* ========== SOCIAL LINKS ========== */
 export const SOCIAL_LINKS = [
