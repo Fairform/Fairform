@@ -1,3 +1,4 @@
+export const runtime = 'nodejs';
 import { NextResponse } from 'next/server'
 import { PDFDocument, StandardFonts } from 'pdf-lib'
 import { nationalRegulations } from '@/lib/constants'
