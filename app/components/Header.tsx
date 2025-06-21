@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { NAV_LINKS } from '@/lib/constants';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -14,8 +15,8 @@ export default function Header() {
       className="sticky top-0 z-50 h-[90px] bg-[#0f0f10]/90 backdrop-blur-xl border-b border-[#252529]"
     >
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center">
-        {/* Logo with gradient border */}
-        <Link href="/" className="flex items-center space-x-3">
+        {/* Logo */}
+        <Link href="/" className="flex items-center space-x-3" onClick={() => setMobileMenuOpen(false)}>
           <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1 rounded-lg">
             <div className="bg-[#0f0f10] rounded-md p-2">
               <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
@@ -49,7 +50,6 @@ export default function Header() {
           >
             Sign in
           </motion.button>
-          
           <motion.button 
             className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-2.5 rounded-lg hover:shadow-[0_0_20px_rgba(66,153,225,0.5)] transition-all"
             whileHover={{ 
@@ -64,12 +64,14 @@ export default function Header() {
         
         {/* Mobile menu button */}
         <button 
-          className="ml-auto md:hidden text-[#a0a0a6]"
+          className="ml-auto md:hidden text-[#a0a0a6] p-2"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-          </svg>
+          {mobileMenuOpen ? (
+            <FaTimes className="h-6 w-6" />
+          ) : (
+            <FaBars className="h-6 w-6" />
+          )}
         </button>
       </div>
 
@@ -80,25 +82,28 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
             className="md:hidden bg-[#0f0f10] border-t border-[#252529]"
           >
             <div className="px-6 py-4 space-y-4">
               {NAV_LINKS.map((link) => (
-                <a
+                <motion.a
                   key={link.name}
                   href={link.href}
                   className="block text-[#a0a0a6] hover:text-white py-2"
                   onClick={() => setMobileMenuOpen(false)}
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.2 }}
                 >
                   {link.name}
-                </a>
+                </motion.a>
               ))}
-              <div className="pt-4 space-y-3">
+              <div className="pt-4 space-y-3 border-t border-[#252529]">
                 <button className="w-full text-left py-2.5 text-[#a0a0a6] hover:text-white">
                   Sign in
                 </button>
-                <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 py-2.5 rounded-lg">
+                <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 py-2.5 rounded-lg text-white">
                   Get Started
                 </button>
               </div>
