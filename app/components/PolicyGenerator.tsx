@@ -1,50 +1,56 @@
-/* app/components/PolicyGenerator.tsx */
 'use client'
+
 import { useState } from 'react'
 
 export default function PolicyGenerator() {
-  const [industry, setIndustry] = useState('')
+  const [industry, setIndustry] = useState('construction')
   const [loading, setLoading] = useState(false)
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null)
 
-  const generate = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!industry) return
+  const generate = async () => {
     setLoading(true)
     const res = await fetch('/api/generate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ industry })
+      body: JSON.stringify({ industry }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
-    const blob = await res.blob()
-    const url = window.URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `fairform-${industry}.pdf`
-    a.click()
+    if (res.ok) {
+      const blob = await res.blob()
+      setPdfUrl(URL.createObjectURL(blob))
+    }
     setLoading(false)
   }
 
   return (
-    <form onSubmit={generate} className="space-y-4">
+    <div className="p-6 max-w-xl mx-auto">
+      <h2 className="text-xl font-semibold mb-4">Generate Compliance Policy</h2>
       <select
         value={industry}
-        onChange={e => setIndustry(e.target.value)}
-        className="w-full p-3 rounded-lg border border-neutral-300 text-black"
+        onChange={(e) => setIndustry(e.target.value)}
+        className="mb-4 p-2 rounded bg-gray-900 border border-gray-700 text-white"
       >
-        <option value="">Select industry</option>
         <option value="construction">Construction</option>
-        <option value="trades">Trades</option>
+        <option value="healthcare">Healthcare</option>
         <option value="retail">Retail</option>
-        <option value="health">Health</option>
+        <option value="trades">Trades</option>
       </select>
-
       <button
-        type="submit"
-        disabled={loading || !industry}
-        className="w-full py-3 rounded-lg bg-black text-white hover:bg-neutral-800 transition disabled:opacity-50"
+        onClick={generate}
+        disabled={loading}
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
       >
-        {loading ? 'Generating…' : 'Generate PDF'}
+        {loading ? 'Generating...' : 'Generate PDF'}
       </button>
-    </form>
+
+      {pdfUrl && (
+        <div className="mt-4">
+          <a href={pdfUrl} download="Fairform-Compliance-Guide.pdf" className="text-blue-400 underline">
+            Download PDF
+          </a>
+        </div>
+      )}
+    </div>
   )
 }
