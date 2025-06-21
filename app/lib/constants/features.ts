@@ -1,17 +1,33 @@
+// app/lib/constants/features.ts
 export const FEATURES = [
   {
-    title: 'Instant Compliance',
-    description: 'Generate NDIS, aged care, and construction documentation instantly.',
-    icon: '⚡️',
+    title: "Instant Policy Generation",
+    description: "Create audit-ready documents in 8 seconds with AI",
+    icon: "🚀"
   },
   {
-    title: 'Live Regulation Sync',
-    description: 'Scrapes active legislation from verified state & federal sources.',
-    icon: '🔍',
+    title: "Real-time Compliance Monitoring",
+    description: "Automatic alerts when regulations change",
+    icon: "🔔"
   },
   {
-    title: '1-Click PDF Exports',
-    description: 'Get branded, audit-ready documentation in one click.',
-    icon: '📄',
+    title: "Multi-format Export",
+    description: "Download as PDF, Word, or integrate via API",
+    icon: "📤"
   },
+  {
+    title: "Audit-proof Documentation",
+    description: "Embedded compliance metadata for auditors",
+    icon: "🛡️"
+  },
+  {
+    title: "Industry-specific Templates",
+    description: "Pre-built for construction, health, retail and trades",
+    icon: "📋"
+  },
+  {
+    title: "No Technical Skills Needed",
+    description: "Designed for business owners, not lawyers",
+    icon: "👨‍💼"
+  }
 ];
