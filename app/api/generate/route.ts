@@ -1,30 +1,50 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { PDFDocument, StandardFonts } from 'pdf-lib';
-import { INDUSTRY_REGULATIONS } from '@/app/lib/constants';
+import { NextResponse } from 'next/server';
+import { PDFDocument, rgb } from 'pdf-lib';
+import { nationalRegulations } from '@/app/lib/constants';
 
-export async function POST(req: NextRequest) {
+export const runtime = 'nodejs';
+
+export async function POST(req: Request) {
   try {
     const { industry } = await req.json();
-    const clauses =
-      INDUSTRY_REGULATIONS[industry as keyof typeof INDUSTRY_REGULATIONS] || [];
+
+    if (!industry || typeof industry !== 'string') {
+      return NextResponse.json({ error: 'Invalid industry provided' }, { status: 400 });
+    }
+
+    const clauses = nationalRegulations[industry] ?? [];
 
     const pdf = await PDFDocument.create();
     const page = pdf.addPage([600, 800]);
-    const font = await pdf.embedFont(StandardFonts.Helvetica);
     const { width, height } = page.getSize();
 
-    let text = `Compliance Clauses for ${industry.toUpperCase()}:\n\n`;
-    clauses.forEach((clause, i) => {
-      text += `${i + 1}. ${clause}\n\n`;
+    const fontSize = 12;
+    const margin = 50;
+    const maxWidth = width - 2 * margin;
+    let y = height - margin;
+
+    const textLines = clauses.flatMap(clause => {
+      const words = clause.split(' ');
+      const lines: string[] = [];
+      let line = '';
+
+      for (const word of words) {
+        const testLine = line + word + ' ';
+        if (testLine.length * (fontSize / 2) > maxWidth) {
+          lines.push(line.trim());
+          line = word + ' ';
+        } else {
+          line = testLine;
+        }
+      }
+      if (line.trim()) lines.push(line.trim());
+      return lines;
     });
 
-    page.drawText(text, {
-      x: 50,
-      y: height - 50,
-      size: 10,
-      font,
-      lineHeight: 14,
-      maxWidth: 500
+    textLines.forEach(line => {
+      if (y < margin) return;
+      page.drawText(line, { x: margin, y, size: fontSize, color: rgb(0, 0, 0) });
+      y -= fontSize + 5;
     });
 
     const pdfBytes = await pdf.save();
@@ -33,21 +53,10 @@ export async function POST(req: NextRequest) {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="${industry}_compliance.pdf"`,
-        'Cache-Control': 'no-store'
-      }
+        'Content-Disposition': `attachment; filename="${industry}-regulations.pdf"`,
+      },
     });
-  } catch (error: any) {
-    console.error('❌ PDF generation failed:', error.message);
-    return new NextResponse(
-      JSON.stringify({ error: 'Failed to generate PDF', details: error.message }),
-      {
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-store'
-        }
-      }
-    );
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to generate PDF', details: (error as Error).message }, { status: 500 });
   }
 }
