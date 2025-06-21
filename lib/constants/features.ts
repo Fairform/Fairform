@@ -1,19 +1,17 @@
-// app/lib/constants/features.ts
-
 export const FEATURES = [
   {
-    title: 'Automated Policy Generation',
-    description: 'Instantly generate compliant documentation tailored to your industry and jurisdiction.',
-    icon: '📝'
+    title: 'Instant Compliance',
+    description: 'Generate NDIS, aged care, and construction documentation instantly.',
+    icon: '⚡️',
   },
   {
-    title: 'Regulation Sync',
-    description: 'Live updates from government sources keep your compliance current.',
-    icon: '🔄'
+    title: 'Live Regulation Sync',
+    description: 'Scrapes active legislation from verified state & federal sources.',
+    icon: '🔍',
   },
   {
-    title: 'One-Click PDFs',
-    description: 'Generate professional policy PDFs with branding and export options.',
-    icon: '📄'
-  }
+    title: '1-Click PDF Exports',
+    description: 'Get branded, audit-ready documentation in one click.',
+    icon: '📄',
+  },
 ];
