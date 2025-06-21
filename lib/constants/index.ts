@@ -1,8 +1,8 @@
 // app/lib/constants/index.ts
 
-export * from './features';
-export * from './pricing';
-export * from './navigation';
-export * from './testimonials';
-export * from './industries';
-export * from './regulations'; // if you’ve defined INDUSTRY_REGULATIONS here
+export { FEATURES } from './features';
+export { PRICING_TIERS } from './pricing';
+export { NAV_LINKS } from './navigation';
+export { TESTIMONIALS } from './testimonials';
+export { INDUSTRIES } from './industries';
+export { INDUSTRY_REGULATIONS } from './regulations'; // Make sure this file exists
