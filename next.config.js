@@ -35,7 +35,7 @@ const nextConfig = {
   // Performance and production settings
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
-  compress: true,
+  compress: true,  // Keep basic compression enabled
 
   // Image optimization
   images: {
@@ -55,7 +55,7 @@ const nextConfig = {
     NEXT_PUBLIC_GITHUB_CLIENT_ID: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID
   },
 
-  // Webpack customizations
+  // Simplified webpack configuration
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
