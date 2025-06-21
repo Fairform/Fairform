@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FEATURES, STATS } from '../../lib/constants';
+import { FEATURES } from '@/app/lib/constants/features'; // ✅ OR:
 
 
 // Animation variants
