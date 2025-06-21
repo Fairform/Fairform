@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FEATURES } from '@/lib/constants';
+import { FEATURES, STATS } from '@/lib/constants';
 
 // Animation variants
 const containerVariants = {
@@ -31,8 +31,8 @@ export default function Features() {
   return (
     <section className="py-20 relative overflow-hidden">
       {/* Background gradients */}
-      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-purple-900/10 blur-[100px] rounded-full -z-10"></div>
-      <div className="absolute bottom-0 right-1/3 w-[600px] h-[600px] bg-blue-900/10 blur-[100px] rounded-full -z-10"></div>
+      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-purple-900/10 blur-[100px] rounded-full -z-10" />
+      <div className="absolute bottom-0 right-1/3 w-[600px] h-[600px] bg-blue-900/10 blur-[100px] rounded-full -z-10" />
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Section header */}
@@ -72,7 +72,7 @@ export default function Features() {
                 {feature.title}
               </h3>
               <p className="text-[#a0a0a6]">{feature.description}</p>
-              <div className="mt-6 h-0.5 bg-gradient-to-r from-blue-500/0 via-blue-500 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+              <div className="mt-6 h-0.5 bg-gradient-to-r from-blue-500/0 via-blue-500 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-all duration-500" />
             </motion.div>
           ))}
         </motion.div>
@@ -86,20 +86,15 @@ export default function Features() {
         viewport={{ once: true }}
         transition={{ duration: 0.7, delay: 0.5 }}
       >
-        {[
-          { stat: '8s', label: 'Policy generation' },
-          { stat: '99.4%', label: 'Regulation accuracy' },
-          { stat: '0', label: 'Audit failures' },
-          { stat: '1,200+', label: 'Businesses' },
-        ].map((s, i) => (
+        {STATS.map((stat, index) => (
           <div
-            key={i}
+            key={index}
             className="p-6 bg-[#171719]/50 backdrop-blur-sm rounded-xl border border-[#252529]"
           >
             <div className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-2">
-              {s.stat}
+              {stat.value}
             </div>
-            <p className="text-[#a0a0a6]">{s.label}</p>
+            <p className="text-[#a0a0a6]">{stat.label}</p>
           </div>
         ))}
       </motion.div>
