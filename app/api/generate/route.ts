@@ -1,50 +1,46 @@
-import { NextResponse } from 'next/server';
-import { PDFDocument, rgb } from 'pdf-lib';
-import { nationalRegulations } from '@/app/lib/constants';
+import { NextRequest, NextResponse } from 'next/server';
+import { PDFDocument, StandardFonts } from 'pdf-lib';
+import { INDUSTRY_REGULATIONS } from '@/app/lib/constants';
 
 export const runtime = 'nodejs';
 
-export async function POST(req: Request) {
+// Define industry types from INDUSTRY_REGULATIONS keys
+type Industry = keyof typeof INDUSTRY_REGULATIONS;
+
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     const { industry } = await req.json();
 
-    if (!industry || typeof industry !== 'string') {
-      return NextResponse.json({ error: 'Invalid industry provided' }, { status: 400 });
+    if (!industry || !(industry in INDUSTRY_REGULATIONS)) {
+      return new NextResponse(
+        JSON.stringify({ error: 'Invalid or missing industry' }),
+        {
+          status: 400,
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-store',
+          },
+        }
+      );
     }
 
-    const clauses = nationalRegulations[industry] ?? [];
+    const clauses = INDUSTRY_REGULATIONS[industry as Industry];
 
     const pdf = await PDFDocument.create();
     const page = pdf.addPage([600, 800]);
-    const { width, height } = page.getSize();
-
+    const font = await pdf.embedFont(StandardFonts.Helvetica);
     const fontSize = 12;
-    const margin = 50;
-    const maxWidth = width - 2 * margin;
-    let y = height - margin;
 
-    const textLines = clauses.flatMap(clause => {
-      const words = clause.split(' ');
-      const lines: string[] = [];
-      let line = '';
+    const lines = clauses.map((clause: string, i: number) => `${i + 1}. ${clause}`);
+    const content = lines.join('\n\n');
 
-      for (const word of words) {
-        const testLine = line + word + ' ';
-        if (testLine.length * (fontSize / 2) > maxWidth) {
-          lines.push(line.trim());
-          line = word + ' ';
-        } else {
-          line = testLine;
-        }
-      }
-      if (line.trim()) lines.push(line.trim());
-      return lines;
-    });
-
-    textLines.forEach(line => {
-      if (y < margin) return;
-      page.drawText(line, { x: margin, y, size: fontSize, color: rgb(0, 0, 0) });
-      y -= fontSize + 5;
+    page.drawText(content, {
+      x: 50,
+      y: 750,
+      size: fontSize,
+      font,
+      lineHeight: 18,
+      maxWidth: 500,
     });
 
     const pdfBytes = await pdf.save();
@@ -53,10 +49,21 @@ export async function POST(req: Request) {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="${industry}-regulations.pdf"`,
+        'Content-Disposition': 'attachment; filename="Fairform-Compliance-Guide.pdf"',
+        'Cache-Control': 'no-store',
       },
     });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to generate PDF', details: (error as Error).message }, { status: 500 });
+  } catch (error: any) {
+    console.error('PDF generation failed:', error);
+    return new NextResponse(
+      JSON.stringify({ error: 'Internal server error', details: error.message }),
+      {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-store',
+        },
+      }
+    );
   }
 }
