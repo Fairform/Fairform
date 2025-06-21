@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FEATURES } from '@/lib/constants/features';
+import { FEATURES } from '@/lib/constants';
 
 // Animation variants
 const containerVariants = {
