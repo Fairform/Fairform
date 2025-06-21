@@ -6,7 +6,6 @@ export const config = {
 };
 
 export async function POST(req: NextRequest) {
-  // Validate cron secret
   const cronSecret = req.headers.get('x-cron-secret');
   if (cronSecret !== process.env.CRON_SECRET) {
     return new NextResponse(JSON.stringify({ 
@@ -22,7 +21,6 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // Execute scraping
     await updateRegulations();
     
     return new NextResponse(JSON.stringify({ 
