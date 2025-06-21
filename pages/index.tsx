@@ -2,6 +2,9 @@
 import Head from 'next/head'
 import { motion } from 'framer-motion'
 import PolicyGenerator from '@/app/components/PolicyGenerator'
+// ...
+<PolicyGenerator />
+
 
 export default function Home() {
   return (
