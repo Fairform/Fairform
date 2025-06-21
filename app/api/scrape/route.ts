@@ -2,9 +2,6 @@ export const runtime = 'nodejs';
 import { NextRequest, NextResponse } from 'next/server';
 import { updateRegulations } from '@/scripts/scraper';
 
-// Fix: Replace config object with runtime export
-export const runtime = 'edge';  // Correct way to specify edge runtime
-
 export async function POST(req: NextRequest) {
   // Validate cron secret
   const cronSecret = req.headers.get('x-cron-secret');
