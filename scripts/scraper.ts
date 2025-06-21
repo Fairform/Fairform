@@ -8,6 +8,10 @@ import dotenv from 'dotenv';
 // Load environment variables
 dotenv.config();
 
+// Get scraper configuration from environment
+const SCRAPER_TIMEOUT = parseInt(process.env.SCRAPER_TIMEOUT || '10000', 10);
+const SCRAPER_RATE_LIMIT = parseInt(process.env.SCRAPER_RATE_LIMIT || '2000', 10);
+
 // Define regulation sources for AU jurisdictions
 const REGULATION_SOURCES = {
   nsw: {
@@ -27,6 +31,7 @@ const REGULATION_SOURCES = {
 export async function updateRegulations(): Promise<void> {
   try {
     console.log('🚀 Starting regulation update...');
+    console.log(`   ⚙️ Timeout: ${SCRAPER_TIMEOUT}ms, Rate Limit: ${SCRAPER_RATE_LIMIT}ms`);
     
     // 1. Scrape regulations from all sources
     const updatedRegulations = {...INDUSTRY_REGULATIONS};
@@ -76,7 +81,7 @@ async function scrapeJurisdiction(
     try {
       // Fetch HTML content
       const response = await axios.get(url, {
-        timeout: 10000,
+        timeout: SCRAPER_TIMEOUT,
         headers: {
           'User-Agent': 'FairformComplianceBot/1.0 (+https://fairform.com)'
         }
@@ -106,7 +111,7 @@ async function scrapeJurisdiction(
       }
       
       // Rate limiting
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, SCRAPER_RATE_LIMIT));
       
     } catch (error) {
       console.warn(`   ✗ ${industry}: Failed (${(error as Error).message})`);
