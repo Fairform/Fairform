@@ -51,7 +51,6 @@ export default function Hero() {
 
   return (
     <section className="relative pt-28 pb-40">
-      {/* Background gradients */}
       <div className="absolute top-20 left-0 w-72 h-72 bg-purple-900/20 blur-[100px] rounded-full -z-10"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-900/20 blur-[100px] rounded-full -z-10"></div>
       
