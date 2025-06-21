@@ -15,7 +15,6 @@ export default function Header() {
       className="sticky top-0 z-50 h-[90px] bg-[#0f0f10]/90 backdrop-blur-xl border-b border-[#252529]"
     >
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center">
-        {/* Logo */}
         <Link href="/" className="flex items-center space-x-3" onClick={() => setMobileMenuOpen(false)}>
           <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1 rounded-lg">
             <div className="bg-[#0f0f10] rounded-md p-2">
@@ -26,7 +25,6 @@ export default function Header() {
           </div>
         </Link>
         
-        {/* Desktop Navigation */}
         <nav className="ml-12 hidden md:flex space-x-10">
           {NAV_LINKS.map((link) => (
             <motion.a
@@ -41,7 +39,6 @@ export default function Header() {
           ))}
         </nav>
         
-        {/* Desktop Auth buttons */}
         <div className="ml-auto hidden md:flex space-x-4">
           <motion.button 
             className="px-5 py-2.5 text-[#a0a0a6] hover:text-white"
@@ -62,20 +59,14 @@ export default function Header() {
           </motion.button>
         </div>
         
-        {/* Mobile menu button */}
         <button 
           className="ml-auto md:hidden text-[#a0a0a6] p-2"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          {mobileMenuOpen ? (
-            <FaTimes className="h-6 w-6" />
-          ) : (
-            <FaBars className="h-6 w-6" />
-          )}
+          {mobileMenuOpen ? <FaTimes className="h-6 w-6" /> : <FaBars className="h-6 w-6" />}
         </button>
       </div>
 
-      {/* Mobile menu panel */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
