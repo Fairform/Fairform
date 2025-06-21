@@ -1,8 +1,9 @@
 // app/lib/constants/navigation.ts
+
 export const NAV_LINKS = [
-  { label: 'Product',   href: '/#product'   },
-  { label: 'Industries',href: '/#industries'},
-  { label: 'Pricing',   href: '/pricing'    },
-  { label: 'Docs',      href: '/docs'       },
-  { label: 'Login',     href: '/login'      },
+  { label: 'Home', href: '/' },
+  { label: 'Features', href: '#features' },
+  { label: 'Pricing', href: '#pricing' },
+  { label: 'About', href: '#about' },
+  { label: 'Contact', href: '#contact' }
 ];
